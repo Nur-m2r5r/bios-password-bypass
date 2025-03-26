@@ -1,0 +1,22 @@
+import unittest
+from src.core.password_generator import BiosPasswordGenerator
+
+class TestPasswordGenerator(unittest.TestCase):
+    def test_phoenix_generation(self):
+        serial = "ABC123"
+        result = BiosPasswordGenerator.generate(serial, "Phoenix Technologies")
+        self.assertIsNotNone(result)
+        self.assertEqual(len(result), 8)
+    
+    def test_ami_generation(self):
+        serial = "XYZ456"
+        result = BiosPasswordGenerator.generate(serial, "American Megatrends")
+        self.assertIsNotNone(result)
+        self.assertTrue(result.startswith("AMI"))
+    
+    def test_unknown_vendor(self):
+        result = BiosPasswordGenerator.generate("123", "Unknown Vendor")
+        self.assertIsNone(result)
+
+if __name__ == "__main__":
+    unittest.main()
